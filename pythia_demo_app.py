@@ -7,6 +7,13 @@ from wisecube_sdk.model_formats import OutputFormat
 import streamlit as st
 
 
+hide_footer_style = """
+    <style>
+    .reportview-container .main footer {visibility: hidden;}    
+    """
+
+st.markdown(hide_footer_style, unsafe_allow_html=True)
+
 st.header('Pythia Hallucination Detection Demo')
 
 @st.cache_data()
