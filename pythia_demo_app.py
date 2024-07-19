@@ -25,6 +25,7 @@ def create_client():
 @st.cache_data(show_spinner="Asking Pythia to detect Hallucinations...")
 def ask_pythia(reference, response, question):
      client = create_client()
+     # update the skd and fix signature on ask pythia ...
      output = client.ask_pythia(reference,response,question)
      #st.json(output)
      metrics = output['data']['askPythia']['metrics']
