@@ -1,4 +1,4 @@
-import streamlit as st
+rrorimport streamlit as st
 import pandas as pd
 import numpy as np
 import json
@@ -82,7 +82,10 @@ if st.button('Ask Pythia', type="primary"):
          #st.write(df)
          st.bar_chart(df, color=["#fd0"])
      except Exception as e:
-         st.subheader('Input is empty or null !!!')  
+         if reference_text is None or response_text is None:
+             st.error('Reference or Response is empty!')
+         else
+             st.error('Something went wrong ...')
          
 
 
