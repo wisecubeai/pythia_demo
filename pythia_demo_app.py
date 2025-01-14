@@ -27,10 +27,11 @@ def ask_pythia(reference, response, question):
      client = create_client()
      # update the skd and fix signature on ask pythia ...
      output = client.ask_pythia(reference,response,question)
-     #st.json(output)
      metrics = output['data']['askPythia']['metrics']
      claims = output['data']['askPythia']['claims']
      return (claims, metrics)
+
+     
 
 @st.cache_data()
 def load_examples(file_name):
@@ -60,25 +61,29 @@ question_text = st.text_area("Relevant Question if any", data['examples'][option
 
 
 if st.button('Ask Pythia', type="primary"):
-     claims, metrics = ask_pythia(reference_text, response_text, question_text)
-     st.subheader('Semantic claims extracted:')
-     st.dataframe(claims)
-
-     st.subheader('Pythia Accuracy Metrics:')
-
-     st.write('Overall Accuracy:', str(float(metrics['accuracy'])*100.00)+"%") 
-
-     contradictions=float(metrics['contradiction'])*100.00
-     entailments=float(metrics['entailment'])*100.00
-     neutrals=float(metrics['neutral'])*100.00
-
-     df = pd.DataFrame(columns=['Percentage'])
-     df.loc[len(df.index)] = [entailments]  
-     df.loc[len(df.index)] = [contradictions]  
-     df.loc[len(df.index)] = [neutrals]  
-     df.index = ['Entailments', 'Contradiction', 'Neutrals']
-     #st.write(df)
-     st.bar_chart(df, color=["#fd0"])
+     try:
+         claims, metrics = ask_pythia(reference_text, response_text, question_text)
+         st.subheader('Semantic claims extracted:')
+         st.dataframe(claims)
+    
+         st.subheader('Pythia Accuracy Metrics:')
+    
+         st.write('Overall Accuracy:', str(float(metrics['accuracy'])*100.00)+"%") 
+    
+         contradictions=float(metrics['contradiction'])*100.00
+         entailments=float(metrics['entailment'])*100.00
+         neutrals=float(metrics['neutral'])*100.00
+    
+         df = pd.DataFrame(columns=['Percentage'])
+         df.loc[len(df.index)] = [entailments]  
+         df.loc[len(df.index)] = [contradictions]  
+         df.loc[len(df.index)] = [neutrals]  
+         df.index = ['Entailments', 'Contradiction', 'Neutrals']
+         #st.write(df)
+         st.bar_chart(df, color=["#fd0"])
+     except Exception as e:
+         st.subheader('Input is empty or null !!!')  
+         
 
 
 
