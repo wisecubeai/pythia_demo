@@ -82,7 +82,7 @@ if st.button('Ask Pythia', type="primary"):
          #st.write(df)
          st.bar_chart(df, color=["#fd0"])
      except Exception as e:
-         if reference_text is None or response_text is None :
+         if reference_text is '' or response_text is '' :
              st.error('Reference or Response is empty!')
          else :
              st.error('Something went wrong ...')
